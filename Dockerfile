@@ -1,14 +1,10 @@
-FROM node:18-alpine
-USER root
-RUN apk add --no-cache git python3 py3-pip make g++ build-base cairo-dev pango-dev chromium
-ENV PUPPETEER_SKIP_DOWNLOAD=true
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+FROM flowiseai/flowise:latest
 
-# Force Node to optimize memory utilization
-ENV NODE_OPTIONS="--max-old-space-size=400"
+# Set optimization to handle Render's 512MB RAM cap smoothly
+ENV NODE_OPTIONS="--max-old-space-size=420"
+ENV PORT=3000
 
-RUN npm install -g flowise --omit=dev
-WORKDIR /data
-CMD ["npx", "flowise", "start"]
+EXPOSE 3000
 
+CMD ["flowise", "start"]
 
